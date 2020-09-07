@@ -4,7 +4,39 @@
     </head>
     <body>
         <div>
-            <h5>Results:</h5>
+            <h5 style="margin-bottom:20px;">Search Results for <span id="queryStr"></span>:</h5>
+            <a href="http://localhost:3000">Go back to Search</a>
+        </div>
+        <div id="search-result-container">
         </div>
     </body>
+    <script>
+        var searchStr = sessionStorage.getItem('recentSearchDataResult');
+        var searchResults = JSON.parse(searchStr);
+        var searchResultsLinks = JSON.parse(sessionStorage.getItem('recentSearchResultsLinks'));
+
+        document.getElementById('queryStr').innerHTML = sessionStorage.getItem('recentSearchDataQuery');
+
+        const queriedResults = searchResults;
+
+        var searchResultContainer = document.getElementById('search-result-container');
+        searchResultContainer.style.cssText = 'margin-top:20px;'
+        
+        for(let i = 0; i <= queriedResults.length; i++){
+            let ele = document.createElement('div');
+            ele.style.cssText = 'border:1px solid grey;margin-bottom:30px;padding:15px;margin-left: 15px;margin-right: 15px;"'
+            let eleTitle = document.createElement('h4');
+            eleTitle.innerHTML = queriedResults[i];
+            let eleLink = document.createElement('a');
+            eleLink.innerHTML = searchResultsLinks[i];
+            eleLink.href = searchResultsLinks[i];
+            eleLink.target = '_blank';
+            eleLink.style.cssText = 'margin-top:15px;'
+
+            ele.appendChild(eleTitle);
+            ele.appendChild(eleLink);
+            searchResultContainer.appendChild(ele);
+        }
+
+    </script>
 </html>

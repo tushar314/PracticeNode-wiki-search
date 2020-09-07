@@ -8,14 +8,14 @@ const viewsPath = path.join(__dirname, '../views')
 
 myApp.set('view engine', 'hbs')
 
-myApp.set('views', viewsPath)
+// myApp.set('views', viewsPath)
 
-// myApp.use(express.static(path.join(__dirname, '../public')));
-console.log(path.join(__dirname, './templates'))
+myApp.use(express.static(path.join(__dirname, '../public')));
+// console.log(path.join(__dirname, './templates'))
 
-myApp.get('/', (req,res) => {
-    res.render('index');
-});
+// myApp.get('/', (req,res) => {
+//     res.render('index');
+// });
 
 myApp.get('/search', (req,res) => {
     let searchTerm = req.query.searchQuery;
@@ -23,8 +23,8 @@ myApp.get('/search', (req,res) => {
     
     request(url, function (error, response) {
         const data = JSON.parse(response.body);
-        res.render('search-result', {query : data[0], results: data[1]})
-    });
+        res.send({response: data})
+    })
 
 });
 

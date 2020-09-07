@@ -16,22 +16,27 @@
     <script>
         var searchInput = document.getElementById('searchInput');
 
-searchInput.addEventListener('keypress', function(event){
-    if(event.keyCode === 13){
-        console.log(event);
-        let searchVal = searchInput.value;
-        console.log(searchVal);
-        let url = 'http://localhost:3000/search?searchQuery=' + searchVal;
+        searchInput.addEventListener('keypress', function(event){
+            if(event.keyCode === 13){
+                console.log(event);
+                let searchVal = searchInput.value;
+                console.log(searchVal);
+                let url = 'http://localhost:3000/search?searchQuery=' + searchVal;
         
-        fetch(url).then((response) => {
-            console.log('response: ', response);
-            response.json().then((data) => {
-                console.log(data);
-            })
-        }, (error) => {
-            console.log('error:', error);
-        });
-    }
-})
+                fetch(url).then((response) => {
+                    response.json().then((data) => {
+                        let dataStr_query = JSON.stringify(data.response[0]);
+                        let dataStr_results = JSON.stringify(data.response[1]);
+                        let dataStr_results_links = JSON.stringify(data.response[3]);
+                        sessionStorage.setItem('recentSearchDataQuery', dataStr_query);
+                        sessionStorage.setItem('recentSearchDataResult', dataStr_results);
+                        sessionStorage.setItem('recentSearchResultsLinks', dataStr_results_links);
+                        window.location.href = 'http://localhost:3000/search-results.html'
+                    })
+                }, (error) => {
+                    console.log('error:', error);
+                });
+            }
+        })
     </script>
 </html>
