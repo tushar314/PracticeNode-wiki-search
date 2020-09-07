@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <div>
+            <div>
+                <h5>Search Results for {{query}}:</h5>
+            </div>
+            <div>
+                {{#each results}}
+                <div style="width: 200px;border: 1px solid grey;">
+                    {{this}}
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </body>
+</html>

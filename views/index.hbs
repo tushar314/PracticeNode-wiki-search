@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div>
+            <div style="text-align:center;margin-top:100px;">
+                Search Wiki
+            </div>
+            <div style="margin-top:30px;text-align:center;">
+                <input type="text" placeholder="Search here.."  style="width:25%;" id="searchInput" />
+            </div>
+        </div>
+    </body>
+    <script>
+        var searchInput = document.getElementById('searchInput');
+
+searchInput.addEventListener('keypress', function(event){
+    if(event.keyCode === 13){
+        console.log(event);
+        let searchVal = searchInput.value;
+        console.log(searchVal);
+        let url = 'http://localhost:3000/search?searchQuery=' + searchVal;
+        
+        fetch(url).then((response) => {
+            console.log('response: ', response);
+            
+        }, (error) => {
+            console.log('error:', error);
+        });
+    }
+})
+    </script>
+</html>
