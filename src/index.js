@@ -1,6 +1,15 @@
 const express = require('express')
 const path = require('path')
 const request = require('request')
+const mongo = require('mongodb')
+const mongoClient = mongo.MongoClient
+
+const connectionUrl = 'mongodb://127.0.0.1:27017'
+const dbName = 'wiki-search'
+
+
+
+
 
 const myApp = express()
 
@@ -23,6 +32,30 @@ myApp.get('/search', (req,res) => {
     
     request(url, function (error, response) {
         const data = JSON.parse(response.body);
+
+        mongoClient.connect(connectionUrl, { useNewUrlParser: true }, (error, client) => {
+            if(error){
+               return console.log('cannot connect to mongo', error);
+            }
+        
+            console.log('db connectionn success')
+        
+            const db = client.db(dbName)
+
+            db.collection('wiki-search-results').insertOne({
+                searchQuery: data[0],
+                keywords: data[1],
+                links: data[2]
+            }, (error, result) => {
+                if(error){
+                    console.log(error);
+                }else{
+                    console.log(result);
+                }
+
+            })
+        })
+
         res.send({response: data})
     })
 
