@@ -5,11 +5,11 @@
     </head>
     <body>
         <div>
-            <div style="text-align:center;margin-top:100px;">
+            <h3 style="text-align:center;margin-top:100px;font-size:28px;color:cornflowerblue;">
                 Search Wiki
-            </div>
+            </h3>
             <div style="margin-top:30px;text-align:center;">
-                <input type="text" placeholder="Search here.."  style="width:25%;" id="searchInput" />
+                <input type="text" placeholder="Search here.."  style="width:25%;height:24px;border-radius:4px;" id="searchInput" />
             </div>
         </div>
     </body>
@@ -28,9 +28,11 @@
                         let dataStr_query = JSON.stringify(data.response[0]);
                         let dataStr_results = JSON.stringify(data.response[1]);
                         let dataStr_results_links = JSON.stringify(data.response[3]);
+                        let descriptionDetails = JSON.stringify(data.response[4]);
                         sessionStorage.setItem('recentSearchDataQuery', dataStr_query);
                         sessionStorage.setItem('recentSearchDataResult', dataStr_results);
                         sessionStorage.setItem('recentSearchResultsLinks', dataStr_results_links);
+                        sessionStorage.setItem('descriptionDetails', descriptionDetails);
                         window.location.href = 'http://localhost:3000/search-results.html'
                     })
                 }, (error) => {

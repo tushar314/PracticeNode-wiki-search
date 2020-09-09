@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <div>
+            <div style="margin-top:30px;text-align:right;">
+                <input type="text" placeholder="search..." id="finderInput" />
+            </div>
+            <div style="text-align:center;margin-top:50px;">
+                <div id="keyword-container" style="font-size:26px;"></div>
+                <div id="img-container" style="margin-top:30px;">
+                </div>
+                <div id="description-container" style="margin:auto;margin-top:30px;width:800px;font-size:18px;"></div>
+            </div>
+        </div>
+        
+        <script>
+            const clickedKeyword = sessionStorage.getItem('card_keyword');
+
+            const detailsList = JSON.parse(sessionStorage.getItem('descriptionDetails'));
+            let detailObj = {
+                img: null,
+                title: null,
+                description: null
+            }
+            detailsList.forEach((item) => {
+                if(item.title == clickedKeyword){
+                    detailObj.title = item.title;
+                    detailObj.description = item.description;
+                    detailObj.img = item.img ? item.img.source : './assets/download.jpg';
+                }
+            });
+
+            const keywordContainer = document.getElementById('keyword-container');
+            keywordContainer.innerHTML = detailObj.title;
+
+            const imgContainer = document.getElementById('img-container');
+            let imgTag = document.createElement('img');
+            imgTag.src = detailObj.img;
+            imgTag.style.cssText = 'width:400px;';
+            imgContainer.appendChild(imgTag);
+
+            const descriptionCont = document.getElementById('description-container');
+            descriptionCont.innerHTML = detailObj.description;
+            
+            const finderInput = document.getElementById('finderInput');
+            finderInput.addEventListener('keypress', function(event){
+                if(event.keyCode == 13){
+                    let searchText = finderInput.value;
+                    window.find(searchText);
+                }
+            })
+            
+        </script>
+    </body>
+</html>
